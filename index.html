@@ -202,23 +202,17 @@
         alert("No hay respuestas para enviar.");
         return;
     }
-    
-    const formattedResponses = responses.map((r, index) => ({
-        imagen: `Imagen ${index + 1}`,
-        miedo_cautivacion: r.miedo_cautivacion,
-        inquietud_curiosidad: r.inquietud_curiosidad,
-        intriga_indiferencia: r.intriga_indiferencia,
-        incomodidad_seguridad: r.incomodidad_seguridad,
-        desconcierto_familiaridad: r.desconcierto_familiaridad
-    }));
 
-    alert("Datos que se enviarán:\n" + JSON.stringify(formattedResponses)); // 🔹 Muestra los datos antes de enviarlos
+    // 🔹 Encabezado de la tabla para Excel
+    let formattedResponses = "Imagen, Miedo-Cautivación, Inquietud-Curiosidad, Intriga-Indiferencia, Incomodidad-Seguridad, Desconcierto-Familiaridad, Edad, Género, Entorno\n";
+
+    // 🔹 Convertir respuestas a formato CSV
+    responses.forEach((r, index) => {
+        formattedResponses += `Imagen ${index + 1}, ${r.miedo_cautivacion}, ${r.inquietud_curiosidad}, ${r.intriga_indiferencia}, ${r.incomodidad_seguridad}, ${r.desconcierto_familiaridad}, ${document.getElementById("age").value}, ${document.getElementById("gender").value}, ${document.getElementById("environment").value}\n`;
+    });
 
     emailjs.send("service_d8ald7k", "template_uxr7uyv", {
-        responses: JSON.stringify(formattedResponses),
-        age: document.getElementById("age").value,
-        gender: document.getElementById("gender").value,
-        environment: document.getElementById("environment").value
+        responses: formattedResponses.trim() // 🔹 Se envía el formato final como texto CSV
     }).then(response => {
         document.getElementById("main-container").innerHTML = `
             <h1>¡Gracias por participar!</h1>
@@ -226,9 +220,10 @@
             <button class="btn" onclick="window.close()">Cerrar</button>
         `;
     }).catch(error => {
-        alert("Hubo un error al enviar los datos: " + JSON.stringify(error)); // 🔹 Muestra el error real en la alerta
+        alert("Hubo un error al enviar los datos: " + JSON.stringify(error));
     });
 }
+
 
     </script>
 </body>
