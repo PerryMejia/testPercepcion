@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Percepción Visual</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Jolly Lodger', cursive;
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-size: 42px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .slider-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 10px;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+            background: linear-gradient(to right, #ffd32a, #32ff7e);
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: black;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 32px;
+            margin-top: -10px;
+        }
+        .btn {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test de Percepción Visual</h1>
+        <img id="test-image" src="https://via.placeholder.com/600x300" alt="Imagen de prueba">
+        
+        <div class="slider-container">
+            <div class="labels"><span>Miedo 😱</span><span>Cautivación 🤩</span></div>
+            <input type="range" min="1" max="5" id="miedo-cautivacion" oninput="updateGradient(this)">
+        </div>
+        
+        <div class="slider-container">
+            <div class="labels"><span>Inquietud 😰</span><span>Curiosidad 🔎</span></div>
+            <input type="range" min="1" max="5" id="inquietud-curiosidad" oninput="updateGradient(this)">
+        </div>
+        
+        <div class="slider-container">
+            <div class="labels"><span>Intriga 🤔</span><span>Indiferencia 😴</span></div>
+            <input type="range" min="1" max="5" id="intriga-indiferencia" oninput="updateGradient(this)">
+        </div>
+        
+        <div class="slider-container">
+            <div class="labels"><span>Incomodidad 😖</span><span>Seguridad 😌</span></div>
+            <input type="range" min="1" max="5" id="incomodidad-seguridad" oninput="updateGradient(this)">
+        </div>
+        
+        <div class="slider-container">
+            <div class="labels"><span>Desconcierto 😵‍💫</span><span>Familiaridad 🏡</span></div>
+            <input type="range" min="1" max="5" id="desconcierto-familiaridad" oninput="updateGradient(this)">
+        </div>
+        
+        <button class="btn" onclick="nextImage()">Siguiente</button>
+    </div>
+
+    <script>
+        const images = [
+            "https://via.placeholder.com/600x300", 
+            "https://via.placeholder.com/600x301", 
+            "https://via.placeholder.com/600x302", 
+            "https://via.placeholder.com/600x303", 
+            "https://via.placeholder.com/600x304"
+        ];
+        let currentIndex = 0;
+
+        function nextImage() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                document.getElementById("test-image").src = images[currentIndex];
+            } else {
+                document.querySelector(".container").innerHTML = `<h1>Gracias por participar!</h1>
+                <p>Sus resultados son anónimos y confidenciales.</p>
+                <button class="btn" onclick="submitTest()">Enviar</button>`;
+            }
+        }
+
+        function updateGradient(slider) {
+            let value = slider.value;
+            let percentage = (value - 1) / 4 * 100;
+            slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
+        }
+
+        function submitTest() {
+            alert("¡Respuestas enviadas! Gracias por tu participación.");
+        }
+    </script>
+</body>
+</html>
