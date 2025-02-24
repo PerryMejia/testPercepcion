@@ -163,10 +163,32 @@
         }
 
         function updateGradient(slider) {
-            let value = slider.value;
-            let percentage = (value - 1) / 4 * 100;
-            slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
-        }
+    let value = slider.value;
+    let percentage = (value - 1) / 4 * 100;
+
+    // 🔹 Aplica el color correcto desde el inicio (inicialmente amarillo a la izquierda)
+    slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
+
+    // 🔹 Hacer que el slider "salte" a la siguiente opción con menos resistencia
+    let roundedValue = Math.round(value);
+    if (value !== roundedValue) {
+        slider.value = roundedValue;
+    }
+}
+
+// 🔹 Función para aplicar los colores correctos desde el inicio
+function setInitialGradient() {
+    document.querySelectorAll("input[type=range]").forEach(slider => {
+        updateGradient(slider); // 🔹 Aplica la corrección inicial
+    });
+}
+
+// 🔹 Aplicar la corrección inicial cuando la página carga
+window.onload = function() {
+    emailjs.init("MD8b0prqcc2atOYnC");
+    setInitialGradient(); // 🔹 Llama a la función para corregir los colores iniciales
+};
+
 
         function showPersonalDataForm() {
             document.getElementById("main-container").innerHTML = `
