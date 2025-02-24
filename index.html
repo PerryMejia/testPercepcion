@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de Percepción Visual</title>
     <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap" rel="stylesheet">
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+        
+        </script>
+
     <style>
         body {
             font-family: 'Jolly Lodger', cursive;
@@ -116,7 +120,10 @@
     </div>
 
     <script>
-        emailjs.init("MD8b0prqcc2atOYnC");
+        window.onload = function() {
+    emailjs.init("MD8b0prqcc2atOYnC");
+};
+
 
         const images = [
             "images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg", 
