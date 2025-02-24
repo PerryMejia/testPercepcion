@@ -26,6 +26,10 @@
             height: auto;
             border-radius: 10px;
         }
+        .question {
+            font-size: 36px;
+            margin: 20px 0;
+        }
         .slider-container {
             margin: 20px 0;
             text-align: left;
@@ -75,29 +79,31 @@
         <h1>Test de Percepción Visual</h1>
         <img id="test-image" src="images/1.jpg" alt="Imagen de prueba">
         
+        <div class="question">¿Qué sientes?</div>
+        
         <div class="slider-container">
             <div class="labels"><span>Miedo 😱</span><span>Cautivación 🤩</span></div>
-            <input type="range" min="1" max="5" id="miedo-cautivacion" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="miedo-cautivacion" value="3" oninput="updateGradient(this)">
         </div>
         
         <div class="slider-container">
             <div class="labels"><span>Inquietud 😰</span><span>Curiosidad 🔎</span></div>
-            <input type="range" min="1" max="5" id="inquietud-curiosidad" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="inquietud-curiosidad" value="3" oninput="updateGradient(this)">
         </div>
         
         <div class="slider-container">
             <div class="labels"><span>Intriga 🤔</span><span>Indiferencia 😴</span></div>
-            <input type="range" min="1" max="5" id="intriga-indiferencia" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="intriga-indiferencia" value="3" oninput="updateGradient(this)">
         </div>
         
         <div class="slider-container">
             <div class="labels"><span>Incomodidad 😖</span><span>Seguridad 😌</span></div>
-            <input type="range" min="1" max="5" id="incomodidad-seguridad" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="incomodidad-seguridad" value="3" oninput="updateGradient(this)">
         </div>
         
         <div class="slider-container">
             <div class="labels"><span>Desconcierto 😵‍💫</span><span>Familiaridad 🏡</span></div>
-            <input type="range" min="1" max="5" id="desconcierto-familiaridad" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="desconcierto-familiaridad" value="3" oninput="updateGradient(this)">
         </div>
         
         <button class="btn" onclick="nextImage()">Siguiente</button>
@@ -114,11 +120,20 @@
             if (currentIndex < images.length - 1) {
                 currentIndex++;
                 document.getElementById("test-image").src = images[currentIndex];
+                resetSliders();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 document.querySelector(".container").innerHTML = `<h1>Gracias por participar!</h1>
                 <p>Sus resultados son anónimos y confidenciales.</p>
                 <button class="btn" onclick="submitTest()">Enviar</button>`;
             }
+        }
+
+        function resetSliders() {
+            document.querySelectorAll("input[type=range]").forEach(slider => {
+                slider.value = 3;
+                updateGradient(slider);
+            });
         }
 
         function updateGradient(slider) {
