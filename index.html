@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de Percepción Visual</title>
     <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap" rel="stylesheet">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <style>
         body {
             font-family: 'Jolly Lodger', cursive;
@@ -42,7 +43,7 @@
             border-radius: 5px;
             outline: none;
             transition: 0.3s;
-            background: linear-gradient(to right, #ffd32a, #32ff7e);
+            background: linear-gradient(to right, #32ff7e, #ffd32a);
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -115,13 +116,17 @@
     </div>
 
     <script>
+        emailjs.init("s_S1FIQg6ZCWSXOCx");
+
         const images = [
             "images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg", 
             "images/6.jpg", "images/7.jpg", "images/8.jpg", "images/9.jpg", "images/10.jpg"
         ];
         let currentIndex = 0;
+        let responses = [];
 
         function nextImage() {
+            saveCurrentResponses();
             if (currentIndex < images.length - 1) {
                 currentIndex++;
                 document.getElementById("test-image").src = images[currentIndex];
@@ -132,63 +137,68 @@
             }
         }
 
-       function resetSliders() {
-    document.querySelectorAll("input[type=range]").forEach(slider => {
-        slider.value = 3;
-        updateGradient(slider);
-    });
-}
+        function saveCurrentResponses() {
+            const response = {
+                miedo_cautivacion: document.getElementById("miedo-cautivacion").value,
+                inquietud_curiosidad: document.getElementById("inquietud-curiosidad").value,
+                intriga_indiferencia: document.getElementById("intriga-indiferencia").value,
+                incomodidad_seguridad: document.getElementById("incomodidad-seguridad").value,
+                desconcierto_familiaridad: document.getElementById("desconcierto-familiaridad").value
+            };
+            responses.push(response);
+        }
 
-function updateGradient(slider) {
-    let value = slider.value;
-    let percentage = (value - 1) / 4 * 100;
-    slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
+        function updateGradient(slider) {
+            let value = slider.value;
+            let percentage = (value - 1) / 4 * 100;
+            slider.style.background = `linear-gradient(to right, #32ff7e ${percentage}%, #ffd32a ${percentage}%)`;
+            let roundedValue = Math.round(value);
+            if (value !== roundedValue) {
+                slider.value = roundedValue;
+            }
+        }
 
-    // 🔹 Hacer que el slider "salte" a la siguiente opción con menos resistencia
-    let roundedValue = Math.round(value);
-    if (value !== roundedValue) {
-        slider.value = roundedValue;
-    }
-}
+        function showDemographicForm() {
+            document.getElementById("main-container").innerHTML = `
+                <h1>Datos Sociodemográficos</h1>
+                <label for="age">Edad:</label>
+                <select id="age">
+                    <option>5 - 14</option>
+                    <option>15 - 21</option>
+                    <option>22 - 50</option>
+                    <option>51 - 99</option>
+                </select>
+                <br>
+                <label for="gender">Género:</label>
+                <select id="gender">
+                    <option>Hombre</option>
+                    <option>Mujer</option>
+                    <option>Prefiero no responder</option>
+                </select>
+                <br>
+                <label for="environment">Estoy en:</label>
+                <select id="environment">
+                    <option>Solo en un lugar tranquilo</option>
+                    <option>Acompañado pero en calma</option>
+                    <option>Ambiente ruidoso y/o distractor</option>
+                </select>
+                <br>
+                <button class="btn" onclick="submitTest()">Enviar</button>
+            `;
+        }
 
-function showDemographicForm() {
-    document.getElementById("main-container").innerHTML = `
-        <h1>Datos Sociodemográficos</h1>
-        <label for="age">Edad:</label>
-        <select id="age">
-            <option>5 - 14</option>
-            <option>15 - 21</option>
-            <option>22 - 50</option>
-            <option>51 - 99</option>
-        </select>
-        <br>
-        <label for="gender">Género:</label>
-        <select id="gender">
-            <option>Hombre</option>
-            <option>Mujer</option>
-            <option>Prefiero no responder</option>
-        </select>
-        <br>
-        <label for="environment">Estoy en:</label>
-        <select id="environment">
-            <option>Solo en un lugar tranquilo</option>
-            <option>Acompañado pero en calma</option>
-            <option>Ambiente ruidoso y/o distractor</option>
-        </select>
-        <br>
-        <button class="btn" onclick="submitTest()">Enviar</button>
-    `;
-}
         function submitTest() {
-            document.getElementById("main-container").innerHTML = 
-                <h1>¡Gracias por participar!</h1>
-                <p>Sus resultados son anónimos y confidenciales.</p>
-                <button class="btn" onclick="window.close()">Cerrar</button>
-            ;
+            emailjs.send("service_xgf9adc", "template_zi2ma0w", {
+                responses: JSON.stringify(responses),
+                age: document.getElementById("age").value,
+                gender: document.getElementById("gender").value,
+                environment: document.getElementById("environment").value
+            });
         }
     </script>
 </body>
 </html>
+
 
 
 
