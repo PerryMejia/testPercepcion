@@ -158,7 +158,7 @@
         function updateGradient(slider) {
             let value = slider.value;
             let percentage = (value - 1) / 4 * 100;
-            slider.style.background = `linear-gradient(to right, #32ff7e ${percentage}%, #ffd32a ${percentage}%)`;
+            slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
         }
 
         function showPersonalDataForm() {
@@ -191,8 +191,9 @@
         }
 
         function submitTest() {
+            emailjs.init("s_S1FIQg6ZCWSXOCx");
             emailjs.send("service_xgf9adc", "template_zi2ma0w", {
-                responses: JSON.stringify(responses),
+                responses: responses.map(r => `${r.miedo_cautivacion},${r.inquietud_curiosidad},${r.intriga_indiferencia},${r.incomodidad_seguridad},${r.desconcierto_familiaridad}`).join("\n"),
                 age: document.getElementById("age").value,
                 gender: document.getElementById("gender").value,
                 environment: document.getElementById("environment").value
