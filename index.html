@@ -47,8 +47,8 @@
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 70px;
-            height: 70px;
+            width: 55px;
+            height: 55px;
             background: black;
             border-radius: 50%;
             cursor: pointer;
@@ -132,54 +132,53 @@
             }
         }
 
-        function resetSliders() {
-            document.querySelectorAll("input[type=range]").forEach(slider => {
-                slider.value = 3;
-                updateGradient(slider);
-            });
-        }
+       function resetSliders() {
+    document.querySelectorAll("input[type=range]").forEach(slider => {
+        slider.value = 3;
+        updateGradient(slider);
+    });
+}
 
-        function updateGradient(slider) {
-            let value = slider.value;
-            let percentage = (value - 1) / 4 * 100;
-            slider.style.background = linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%);
-             // 🔹 Hacer que el slider "salte" a la siguiente opción con menos resistencia
-            let roundedValue = Math.round(value);
-            if (value !== roundedValue) {
-                slider.value = roundedValue;
-            }
-     }
-        }
+function updateGradient(slider) {
+    let value = slider.value;
+    let percentage = (value - 1) / 4 * 100;
+    slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
 
-        function showDemographicForm() {
-            document.getElementById("main-container").innerHTML = 
-                <h1>Datos Sociodemográficos</h1>
-                <label for="age">Edad:</label>
-                <select id="age">
-                    <option>5 - 14</option>
-                    <option>15 - 21</option>
-                    <option>22 - 50</option>
-                    <option>51 - 99</option>
-                </select>
-                <br>
-                <label for="gender">Género:</label>
-                <select id="gender">
-                    <option>Hombre</option>
-                    <option>Mujer</option>
-                    <option>Prefiero no responder</option>
-                </select>
-                <br>
-                <label for="environment">Estoy en:</label>
-                <select id="environment">
-                    <option>Solo en un lugar tranquilo</option>
-                    <option>Acompañado pero en calma</option>
-                    <option>Ambiente ruidoso y/o distractor</option>
-                </select>
-                <br>
-                <button class="btn" onclick="submitTest()">Enviar</button>
-            ;
-        }
+    // 🔹 Hacer que el slider "salte" a la siguiente opción con menos resistencia
+    let roundedValue = Math.round(value);
+    if (value !== roundedValue) {
+        slider.value = roundedValue;
+    }
+}
 
+function showDemographicForm() {
+    document.getElementById("main-container").innerHTML = `
+        <h1>Datos Sociodemográficos</h1>
+        <label for="age">Edad:</label>
+        <select id="age">
+            <option>5 - 14</option>
+            <option>15 - 21</option>
+            <option>22 - 50</option>
+            <option>51 - 99</option>
+        </select>
+        <br>
+        <label for="gender">Género:</label>
+        <select id="gender">
+            <option>Hombre</option>
+            <option>Mujer</option>
+            <option>Prefiero no responder</option>
+        </select>
+        <br>
+        <label for="environment">Estoy en:</label>
+        <select id="environment">
+            <option>Solo en un lugar tranquilo</option>
+            <option>Acompañado pero en calma</option>
+            <option>Ambiente ruidoso y/o distractor</option>
+        </select>
+        <br>
+        <button class="btn" onclick="submitTest()">Enviar</button>
+    `;
+}
         function submitTest() {
             document.getElementById("main-container").innerHTML = 
                 <h1>¡Gracias por participar!</h1>
