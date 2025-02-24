@@ -39,6 +39,13 @@
             margin: 20px 0;
             text-align: left;
         }
+        .instruction {
+            font-size: 28px;
+            color: #ffffff;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            text-align: center;
+        }
         input[type=range] {
             width: 100%;
             -webkit-appearance: none;
@@ -50,14 +57,26 @@
             background: linear-gradient(to right, #32ff7e, #ffd32a);
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 55px;
-            height: 55px;
-            background: black;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+    -webkit-appearance: none;
+    appearance: none;
+    width: 55px;
+    height: 55px;
+    background: black;
+    border-radius: 10px; /* 🔹 Cambiar a rectángulo con esquinas redondeadas */
+    border: 3px solid white; /* 🔹 Borde blanco para resaltar */
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8); /* 🔹 Efecto de brillo */
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 55px;
+    height: 55px;
+    background: black;
+    border-radius: 10px;
+    border: 3px solid white;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
         .labels {
             display: flex;
             justify-content: space-between;
@@ -94,6 +113,7 @@
         <img id="test-image" src="images/1.jpg" alt="Imagen de prueba">
         
         <div class="question">¿Qué sientes?</div>
+        <p class="instruction">Desplaza el medidor hacia la emoción que te evoca la imagen.</p>
 
         <div class="slider-container">
             <div class="labels"><span>Miedo 😱</span><span>Cautivación 🤩</span></div>
