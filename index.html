@@ -72,6 +72,15 @@
         .btn:hover {
             background: #e64a19;
         }
+        select, .dropdown-container {
+            font-size: 24px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            background: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -80,10 +89,26 @@
         <img id="test-image" src="images/1.jpg" alt="Imagen de prueba">
         
         <div class="question">¿Qué sientes?</div>
-        
+
         <div class="slider-container">
             <div class="labels"><span>Miedo 😱</span><span>Cautivación 🤩</span></div>
-            <input type="range" min="1" max="5" id="miedo-cautivacion" value="3" oninput="updateGradient(this)">
+            <input type="range" min="1" max="5" id="miedo-cautivacion" value="3">
+        </div>
+        <div class="slider-container">
+            <div class="labels"><span>Inquietud 😰</span><span>Curiosidad 🔎</span></div>
+            <input type="range" min="1" max="5" id="inquietud-curiosidad" value="3">
+        </div>
+        <div class="slider-container">
+            <div class="labels"><span>Intriga 🤔</span><span>Indiferencia 😴</span></div>
+            <input type="range" min="1" max="5" id="intriga-indiferencia" value="3">
+        </div>
+        <div class="slider-container">
+            <div class="labels"><span>Incomodidad 😖</span><span>Seguridad 😌</span></div>
+            <input type="range" min="1" max="5" id="incomodidad-seguridad" value="3">
+        </div>
+        <div class="slider-container">
+            <div class="labels"><span>Desconcierto 😵‍💫</span><span>Familiaridad 🏡</span></div>
+            <input type="range" min="1" max="5" id="desconcierto-familiaridad" value="3">
         </div>
         
         <button class="btn" onclick="nextImage()">Siguiente</button>
@@ -110,7 +135,6 @@
         function resetSliders() {
             document.querySelectorAll("input[type=range]").forEach(slider => {
                 slider.value = 3;
-                updateGradient(slider);
             });
         }
 
