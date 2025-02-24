@@ -164,6 +164,28 @@
         function showPersonalDataForm() {
             document.getElementById("main-container").innerHTML = `
                 <h1>Datos Personales</h1>
+                <label for="age">Edad:</label>
+                <select id="age">
+                    <option>5 - 14</option>
+                    <option>15 - 21</option>
+                    <option>22 - 50</option>
+                    <option>51 - 99</option>
+                </select>
+                <br>
+                <label for="gender">Género:</label>
+                <select id="gender">
+                    <option>Hombre</option>
+                    <option>Mujer</option>
+                    <option>Prefiero no responder</option>
+                </select>
+                <br>
+                <label for="environment">Estoy en:</label>
+                <select id="environment">
+                    <option>Solo en un lugar tranquilo</option>
+                    <option>Acompañado pero en calma</option>
+                    <option>Ambiente ruidoso y/o distractor</option>
+                </select>
+                <br>
                 <button class="btn" onclick="submitTest()">Enviar</button>
             `;
         }
@@ -171,13 +193,17 @@
         function submitTest() {
             emailjs.send("service_xgf9adc", "template_zi2ma0w", {
                 responses: JSON.stringify(responses)
+                age: document.getElementById("age").value,
+                gender: document.getElementById("gender").value,
+                environment: document.getElementById("environment").value
             }).then(response => {
                 document.getElementById("main-container").innerHTML = `
                     <h1>¡Gracias por participar!</h1>
-                    <p>Sus resultados han sido enviados con éxito.</p>
+                    <p>sus resultados son anonimos y confidenciales.</p>
                     <button class="btn" onclick="window.close()">Cerrar</button>
                 `;
             }).catch(error => {
+                console.log("Error al enviar el email:", error);
                 alert("Hubo un error al enviar los datos. Inténtalo de nuevo.");
             });
         }
