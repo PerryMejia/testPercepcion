@@ -191,36 +191,38 @@
         }
 
         function submitTest() {
-            if (responses.length === 0) {
-                alert("No hay respuestas para enviar.");
-                return;
-            }
-            
-            const formattedResponses = responses.map((r, index) => ({
-                imagen: `Imagen ${index + 1}`,
-                miedo_cautivacion: r.miedo_cautivacion,
-                inquietud_curiosidad: r.inquietud_curiosidad,
-                intriga_indiferencia: r.intriga_indiferencia,
-                incomodidad_seguridad: r.incomodidad_seguridad,
-                desconcierto_familiaridad: r.desconcierto_familiaridad
-            }));
-            
-            emailjs.send("service_d8ald7k", "template_uxr7uyv", {
-                responses: JSON.stringify(formattedResponses), // 🔹 Ahora es un objeto JSON válido
-                age: document.getElementById("age").value,
-                gender: document.getElementById("gender").value,
-                environment: document.getElementById("environment").value
-            }).then(response => {
-                document.getElementById("main-container").innerHTML = `
-                <h1>¡Gracias por participar!</h1>
-                <p>Sus resultados son anónimos y confidenciales.</p>
-                <button class="btn" onclick="window.close()">Cerrar</button>
-                `;
-            }).catch(error => {
-                console.log("Error al enviar el email:", error);
-                alert("Hubo un error al enviar los datos. Inténtalo de nuevo.");
-            });
-        }
+    if (responses.length === 0) {
+        alert("No hay respuestas para enviar.");
+        return;
+    }
+    
+    const formattedResponses = responses.map((r, index) => ({
+        imagen: `Imagen ${index + 1}`,
+        miedo_cautivacion: r.miedo_cautivacion,
+        inquietud_curiosidad: r.inquietud_curiosidad,
+        intriga_indiferencia: r.intriga_indiferencia,
+        incomodidad_seguridad: r.incomodidad_seguridad,
+        desconcierto_familiaridad: r.desconcierto_familiaridad
+    }));
+
+    alert("Datos que se enviarán:\n" + JSON.stringify(formattedResponses)); // 🔹 Muestra los datos antes de enviarlos
+
+    emailjs.send("service_d8ald7k", "template_uxr7uyv", {
+        responses: JSON.stringify(formattedResponses),
+        age: document.getElementById("age").value,
+        gender: document.getElementById("gender").value,
+        environment: document.getElementById("environment").value
+    }).then(response => {
+        document.getElementById("main-container").innerHTML = `
+            <h1>¡Gracias por participar!</h1>
+            <p>Sus resultados son anónimos y confidenciales.</p>
+            <button class="btn" onclick="window.close()">Cerrar</button>
+        `;
+    }).catch(error => {
+        alert("Hubo un error al enviar los datos: " + JSON.stringify(error)); // 🔹 Muestra el error real en la alerta
+    });
+}
+
     </script>
 </body>
 </html>
