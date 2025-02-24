@@ -116,7 +116,7 @@
     </div>
 
     <script>
-        emailjs.init("s_S1FIQg6ZCWSXOCx");
+        emailjs.init("MD8b0prqcc2atOYnC");
 
         const images = [
             "images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg", 
@@ -191,11 +191,22 @@
         }
 
         function submitTest() {
-            const formattedResponses = responses.map((r, index) => 
-                `Imagen ${index + 1}: ${r.miedo_cautivacion},${r.inquietud_curiosidad},${r.intriga_indiferencia},${r.incomodidad_seguridad},${r.desconcierto_familiaridad}`
-                                                    ).join("\n");
-            emailjs.send("service_xgf9adc", "template_zi2ma0w", {
-                responses: formattedResponses,
+            if (responses.length === 0) {
+                alert("No hay respuestas para enviar.");
+                return;
+            }
+            
+            const formattedResponses = responses.map((r, index) => ({
+                imagen: `Imagen ${index + 1}`,
+                miedo_cautivacion: r.miedo_cautivacion,
+                inquietud_curiosidad: r.inquietud_curiosidad,
+                intriga_indiferencia: r.intriga_indiferencia,
+                incomodidad_seguridad: r.incomodidad_seguridad,
+                desconcierto_familiaridad: r.desconcierto_familiaridad
+            }));
+            
+            emailjs.send("service_d8ald7k", "template_uxr7uyv", {
+                responses: JSON.stringify(formattedResponses), // 🔹 Ahora es un objeto JSON válido
                 age: document.getElementById("age").value,
                 gender: document.getElementById("gender").value,
                 environment: document.getElementById("environment").value
@@ -210,7 +221,6 @@
                 alert("Hubo un error al enviar los datos. Inténtalo de nuevo.");
             });
         }
-
     </script>
 </body>
 </html>
