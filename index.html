@@ -72,10 +72,19 @@
         .btn:hover {
             background: #e64a19;
         }
+        select, .dropdown-container {
+            font-size: 24px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            background: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="main-container">
         <h1>Test de Percepción Visual</h1>
         <img id="test-image" src="images/1.jpg" alt="Imagen de prueba">
         
@@ -89,21 +98,6 @@
         <div class="slider-container">
             <div class="labels"><span>Inquietud 😰</span><span>Curiosidad 🔎</span></div>
             <input type="range" min="1" max="5" id="inquietud-curiosidad" value="3" oninput="updateGradient(this)">
-        </div>
-        
-        <div class="slider-container">
-            <div class="labels"><span>Intriga 🤔</span><span>Indiferencia 😴</span></div>
-            <input type="range" min="1" max="5" id="intriga-indiferencia" value="3" oninput="updateGradient(this)">
-        </div>
-        
-        <div class="slider-container">
-            <div class="labels"><span>Incomodidad 😖</span><span>Seguridad 😌</span></div>
-            <input type="range" min="1" max="5" id="incomodidad-seguridad" value="3" oninput="updateGradient(this)">
-        </div>
-        
-        <div class="slider-container">
-            <div class="labels"><span>Desconcierto 😵‍💫</span><span>Familiaridad 🏡</span></div>
-            <input type="range" min="1" max="5" id="desconcierto-familiaridad" value="3" oninput="updateGradient(this)">
         </div>
         
         <button class="btn" onclick="nextImage()">Siguiente</button>
@@ -123,9 +117,7 @@
                 resetSliders();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                document.querySelector(".container").innerHTML = `<h1>Gracias por participar!</h1>
-                <p>Sus resultados son anónimos y confidenciales.</p>
-                <button class="btn" onclick="submitTest()">Enviar</button>`;
+                showDemographicForm();
             }
         }
 
@@ -142,8 +134,41 @@
             slider.style.background = `linear-gradient(to right, #ffd32a ${percentage}%, #32ff7e ${percentage}%)`;
         }
 
+        function showDemographicForm() {
+            document.getElementById("main-container").innerHTML = `
+                <h1>Datos Sociodemográficos</h1>
+                <label for="age">Edad:</label>
+                <select id="age" class="dropdown-container">
+                    <option>5 - 14</option>
+                    <option>15 - 21</option>
+                    <option>22 - 50</option>
+                    <option>51 - 99</option>
+                </select>
+                <br>
+                <label for="gender">Género:</label>
+                <select id="gender" class="dropdown-container">
+                    <option>Hombre</option>
+                    <option>Mujer</option>
+                    <option>Prefiero no responder</option>
+                </select>
+                <br>
+                <label for="environment">Estoy en:</label>
+                <select id="environment" class="dropdown-container">
+                    <option>Solo en un lugar tranquilo</option>
+                    <option>Acompañado pero en calma</option>
+                    <option>Ambiente ruidoso y/o distractor</option>
+                </select>
+                <br>
+                <button class="btn" onclick="submitTest()">Enviar</button>
+            `;
+        }
+
         function submitTest() {
-            alert("¡Respuestas enviadas! Gracias por tu participación.");
+            document.getElementById("main-container").innerHTML = `
+                <h1>¡Gracias por participar!</h1>
+                <p>Sus resultados son anónimos y confidenciales.</p>
+                <button class="btn" onclick="window.close()">Cerrar</button>
+            `;
         }
     </script>
 </body>
